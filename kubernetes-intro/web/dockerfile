@@ -4,9 +4,9 @@ RUN apk add --update nginx && rm -rf /var/cache/apk/*
 
 RUN mkdir /app
 
-RUN adduser -D -u 1001 appuser
+RUN adduser -D -u 1001 app
 
-RUN chown -fR appuser /app
+RUN chown -fR app: /app
 
 RUN echo -e "daemon off;\n\
 pid /var/lib/nginx/nginx.pid;\n\
@@ -21,13 +21,13 @@ http {\n\
     access_log off;\n\
     error_log /var/log/nginx/ngx_error.log error;\n\
     location / {\n\
-      root /app;\n\
+      root /app/;\n\
     }\n\
   }\n\
 }\n"\
 | tee /etc/nginx/nginx.conf
 
-RUN echo "appuser ALL=(ALL:ALL) NOPASSWD:ALL" > /etc/sudoers
+RUN echo "app ALL=(ALL:ALL) NOPASSWD:ALL" > /etc/sudoers
 
 EXPOSE 8000
 
