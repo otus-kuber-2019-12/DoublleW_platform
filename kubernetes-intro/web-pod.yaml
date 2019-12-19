@@ -9,7 +9,7 @@ metadata:
 spec:
   containers: 
   - name: web
-    image: doubllew/public1:ki-web2
+    image: doubllew/public1:ki-web1
     volumeMounts:
     - name: app
       mountPath: /app

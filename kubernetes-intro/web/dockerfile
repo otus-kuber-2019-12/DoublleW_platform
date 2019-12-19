@@ -15,7 +15,7 @@ events {\n\
 }\n\
 http {\n\
   include /etc/nginx/mime.types;\n\
-  index homework.html;\n\
+  index index.html index.htm;\n\
   server {\n\
     listen *:8000;\n\
     access_log off;\n\
@@ -29,7 +29,7 @@ http {\n\
 
 RUN echo "appuser ALL=(ALL:ALL) NOPASSWD:ALL" > /etc/sudoers
 
-#EXPOSE 8000
+EXPOSE 8000
 
 CMD ["nginx"]
 
