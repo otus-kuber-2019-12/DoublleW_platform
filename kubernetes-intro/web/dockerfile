@@ -1,0 +1,36 @@
+FROM alpine:3.4
+
+RUN apk add --update nginx && rm -rf /var/cache/apk/*
+
+RUN mkdir /app
+
+RUN adduser -D -u 1001 app
+
+RUN chown -fR app: /app
+
+RUN echo -e "daemon off;\n\
+pid /var/lib/nginx/nginx.pid;\n\
+events {\n\
+    worker_connections 1024;\n\
+}\n\
+http {\n\
+  include /etc/nginx/mime.types;\n\
+  index index.html index.htm;\n\
+  server {\n\
+    listen *:8000;\n\
+    access_log off;\n\
+    error_log /var/log/nginx/ngx_error.log error;\n\
+    location / {\n\
+      root /app/;\n\
+    }\n\
+  }\n\
+}\n"\
+| tee /etc/nginx/nginx.conf
+
+RUN echo "app ALL=(ALL:ALL) NOPASSWD:ALL" > /etc/sudoers
+
+EXPOSE 8000
+
+CMD ["nginx"]
+
+
