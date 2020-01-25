@@ -12,6 +12,15 @@ spec:
     volumeMounts:
     - name: app
       mountPath: /app
+    readinessProbe:
+      httpGet:
+        path: /index.html
+        port: 80
+    livenessProbe:
+      tcpSocket:
+        port: 8000
+      initialDelaySeconds: 10
+      periodSeconds: 20
 
   initContainers:
   - name: init-web
