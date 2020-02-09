@@ -1,0 +1,26 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/acme-challenge-type: http01
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    kubernetes.io/ingress.class: nginx
+    kubernetes.io/tls-acme: "true"
+  labels:
+    app: frontend 
+  name: hipster-shop-ingress
+  namespace: hipster-shop
+spec:
+  rules:
+  - host: shop.o-k-hw6.dns-cloud.net
+    http:
+      paths:
+      - backend:
+          serviceName: frontend
+          servicePort: 80
+        path: /
+  tls:
+  - hosts:
+    - shop.o-k-hw6.dns-cloud.net
+    secretName: shop.o-k-hw6.dns-cloud.net
+
