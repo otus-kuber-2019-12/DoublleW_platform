@@ -1,4 +1,4 @@
-# Выполнено ДЗ №
+# Выполнено ДЗ № 7
 
  - [x] Основное ДЗ
  - [ ] Задание со *
@@ -66,34 +66,6 @@ mysql: [Warning] Using a password on the command line interface can be insecure.
 kubectl get jobs.batch
 NAME                         COMPLETIONS   DURATION   AGE
 backup-mysql-instance-job    1/1           3s         51s
-restore-mysql-instance-job   0/1           13m        13m
-```
-Смотрим в логи и видим выполнение задания
-```
-kubectl describe jobs
-Name:           backup-mysql-instance-job
-Namespace:      default
-Selector:       controller-uid=db0fe55d-acd3-4092-98db-cd1e46bbc8bb
-Labels:         usage=backup-mysql-instance-job
-...
-Events:
-  Type    Reason            Age   From            Message
-  ----    ------            ----  ----            -------
-  Normal  SuccessfulCreate  14m   job-controller  Created pod: backup-mysql-instance-job-w942j
-
-
-Name:           restore-mysql-instance-job
-Namespace:      default
-Selector:       controller-uid=af60c97f-88a1-437d-ac02-f398de3102e7
-Labels:         controller-uid=af60c97f-88a1-437d-ac02-f398de3102e7
-                job-name=restore-mysql-instance-job
-...
-Events:
-  Type     Reason                Age                From            Message
-  ----     ------                ----               ----            -------
-  Normal   SuccessfulCreate      26m                job-controller  Created pod: restore-mysql-instance-job-d2x2r
-  Normal   SuccessfulDelete      20m                job-controller  Deleted pod: restore-mysql-instance-job-d2x2r
-  Warning  BackoffLimitExceeded  20m (x2 over 20m)  job-controller  Job has reached the specified backoff limit
 ```
 Снова применяем манифест cr.yml и проверяем записи в БД
 ```
@@ -105,6 +77,11 @@ mysql: [Warning] Using a password on the command line interface can be insecure.
 |  1 | some data-11 |
 |  2 | some data-21 |
 +----+--------------+
+
+kubectl get jobs
+NAME                         COMPLETIONS   DURATION   AGE
+backup-mysql-instance-job    1/1           3s         50m
+restore-mysql-instance-job   1/1           62m        62m
 ```
 
 ## Как запустить проект:
@@ -121,3 +98,4 @@ mysql: [Warning] Using a password on the command line interface can be insecure.
 
 ## PR checklist:
  - [x] Выставлен label с номером домашнего задания
+
