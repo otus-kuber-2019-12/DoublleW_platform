@@ -1,0 +1,9 @@
+commonLabels:  ## Labels to apply to all resources
+  prometheus: kube-prometheus
+prometheus:
+  prometheusSpec:
+    retention: 3d
+    serviceMonitorSelectorNilUsesHelmValues: false
+  serviceMonitorSelector:  ### matchLabels for ServiceMonitors select
+    matchLabels:
+      prometheus: kube-prometheus
