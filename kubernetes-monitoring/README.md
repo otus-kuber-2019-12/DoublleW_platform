@@ -39,8 +39,9 @@ kubectl get secret -n monitoring prometheus-operator-1582488874-grafana -o jsonp
 ```
 kubectl port-forward -n monitoring prometheus-operator-1582488874-grafana-6f8d764f9f-m48xq 3000:3000
 ```
-######### вставить рисунок
-   Если график не строится, то можно сходить на вэб-интерфейс prometheus и посмотреть в меню Service Discovery, если не опрелелил nginx ищим ошибку и исправляем.
+![grafana](./grafana.png)
+
+ - Если график не строится, то можно сходить на вэб-интерфейс prometheus и посмотреть в меню Service Discovery, если не опрелелил nginx ищим ошибку и исправляем.
 ```
 kubectl port-forward -n monitoring prometheus-prometheus-operator-158248-prometheus-0 9090:9090
 ```
