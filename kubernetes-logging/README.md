@@ -143,7 +143,7 @@ kubectl logs fluent-bit-fzpl8 -n observability --tail 2
 [2020/03/23 00:56:20] [ info] [filter_kube] API server connectivity OK
 [2020/03/23 00:56:20] [ info] [sp] stream processor started
 ```
-#####kibana-def.png
+![kibana-def](./kibana-def.png)
 
  - Мониторинг ElasticSearch
 Устанавливаем prometheus-operator в namespace observability
@@ -176,7 +176,7 @@ NAME                                     READY   STATUS    RESTARTS   AGE   IP  
 elasticsearch-exporter-f65df58f8-p4mvs   1/1     Running   0          19h   10.60.2.11   gke-cluster-otus-hw9-infra-pool-375c01f8-5bf8   <none>           <none>
 ```
 Все dashboards для grafana берем из оф. ресурса - https://grafana.com/grafana/dashboards?dataSource=prometheus&direction=asc&orderBy=name
-#####grafana-es.png
+![grafana-es](./grafana-es.png)
 
 Делаем drain одной из нод infra-pool
 При удалении подов с еще 1 ноды, поды на 1 оставшейся ноде перешли в состояние "Not Ready", перестали собираться метрики, вернул ноды в рабочее состояние.
@@ -190,9 +190,9 @@ helm upgrade --install nginx-ingress-infra stable/nginx-ingress -f nginx-ingress
     --set controller.metrics.enabled=true,controller.metrics.serviceMonitor.enabled=true \
     --namespace=nginx-ingress-infra 
 ```
-#####kibana-nginx.png
+![kibana-nginx](./kibana-nginx.png)
 Cоздаем в kibana визуализацию, показывающую общее количество запросов к nginx-ingress. 
-#####kibana-nginx_f.png
+![kibana-nginx_f](./kibana-nginx_f.png)
 
  - Loki
 Установливаем Loki и Promtail в namespace observability, дописываем манифест loki.values.yaml и разворачиваем
@@ -204,11 +204,11 @@ helm upgrade --install loki loki/loki-stack -f loki.values.yaml \
 
  - Loki | Datasource
 В grafana смотрим что loki видит nginx-ingress и показывает его логи
-#####grafana-loki.png
+![grafana-loki](./grafana-loki.png)
 
  - Loki | Визуализация
 Создаем в grafana свою новую панель
-#####grafana-nginx_man.png
+![grafana-nginx_man](./grafana-nginx_man.png)
 
 ## Как запустить проект:
  - Описание выше
@@ -220,3 +220,4 @@ helm upgrade --install loki loki/loki-stack -f loki.values.yaml \
    
 ## PR checklist:
  - [x] Выставлен label с номером домашнего задания
+
