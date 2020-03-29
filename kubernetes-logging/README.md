@@ -224,8 +224,8 @@ helm upgrade --install loki loki/loki-stack -f loki.values.yaml \
 ## Как проверить работоспособность:
  - Посмотреть результат:
 
-https://kibana.o-k-hw9.dns-cloud.net
-https://grafana.o-k-hw9.dns-cloud.net (пароль в манифесте)
+ - https://kibana.o-k-hw9.dns-cloud.net
+ - https://grafana.o-k-hw9.dns-cloud.net (пароль в манифесте)
    
 ## PR checklist:
 
