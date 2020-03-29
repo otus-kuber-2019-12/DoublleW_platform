@@ -1,0 +1,71 @@
+defaultRules:
+  alertmanagerSpec:
+    nodeSelector:
+      cloud.google.com/gke-nodepool: infra-pool
+    tolerations: 
+      - key: node-role
+        operator: Equal
+        value: infra
+        effect: NoSchedule
+
+grafana:
+  enabled: true
+  defaultDashboardsEnabled: true
+  adminPassword: Gf4YH75FjkutJ6d9R4j
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: nginx
+      kubernetes.io/tls-acme: "true"
+      cert-manager.io/cluster-issuer: "letsencrypt-prod"
+      cert-manager.io/acme-challenge-type: "http01"
+    hosts: 
+      - grafana.o-k-hw9.dns-cloud.net
+    path: /
+    tls: 
+      - secretName: grafana.o-k-hw9.dns-cloud.net-tls
+        hosts:
+        - grafana.o-k-hw9.dns-cloud.net
+  additionalDataSources:
+    - name: Loki
+      type: loki
+      access: proxy
+      url: http://loki:3100
+      jsonData:
+        maxLines: 1000
+
+prometheusOperator:
+  admissionWebhooks:
+      nodeSelector:
+        cloud.google.com/gke-nodepool: infra-pool
+      tolerations:
+        - key: node-role
+          operator: Equal
+          value: infra
+          effect: NoSchedule
+  nodeSelector:
+    cloud.google.com/gke-nodepool: infra-pool
+  tolerations:
+    - key: node-role
+      operator: Equal
+      value: infra
+      effect: NoSchedule
+
+prometheus:
+  prometheusSpec:
+    tolerations:
+      - key: node-role
+        operator: Equal
+        value: infra
+        effect: NoSchedule
+    nodeSelector:
+      cloud.google.com/gke-nodepool: infra-pool
+    ruleSelector: {}
+    ruleNamespaceSelector: {}
+    ruleSelectorNilUsesHelmValues: false
+    serviceMonitorSelector: {}
+    serviceMonitorNamespaceSelector: {}
+    serviceMonitorSelectorNilUsesHelmValues: false
+    podMonitorSelector: {}
+    podMonitorNamespaceSelector: {}
+    podMonitorSelectorNilUsesHelmValues: false
