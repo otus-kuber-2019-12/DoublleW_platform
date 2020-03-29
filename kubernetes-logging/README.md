@@ -18,6 +18,7 @@ elasticsearch-master-1   1/1     Running   0          28m   10.60.1.8   gke-clus
 elasticsearch-master-2   1/1     Running   0          28m   10.60.2.2   gke-cluster-otus-hw9-infra-pool-375c01f8-5bf8   <none>           <none>
 ```
  - Установка nginx-ingress | Самостоятельное задание
+
 Создаем namespace.yaml и описываем создание namespace в пуле infra-pool используя PodNodeSelector и дописываем values.yaml для разворачивания 3 реплик в infra-pool.
 Запускаем heml и устанавливаем  nginx-ingress.
 ```
@@ -78,6 +79,7 @@ kubectl apply -f cert-manager/ci-letsencript.yaml --force
 ```
 Регестрируем доменное имя на любом бесплатном ddns хостинге.
  - Установка EFK стека | Kibana
+
 Устанавливаем сразу с получением сертификата на доменное имя kibana.o-k-hw9.dns-cloud.net
 Изменяем kibana.values.yaml
 ```
@@ -146,6 +148,7 @@ kubectl logs fluent-bit-fzpl8 -n observability --tail 2
 ![kibana-def](./kibana-def.png)
 
  - Мониторинг ElasticSearch
+
 Устанавливаем prometheus-operator в namespace observability
 ```
 kubectl apply -f https://raw.githubusercontent.com/coreos/prometheus-operator/release-0.35/example/prometheus-operator-crd/monitoring.coreos.com_alertmanagers.yaml
@@ -182,6 +185,7 @@ elasticsearch-exporter-f65df58f8-p4mvs   1/1     Running   0          19h   10.6
 При удалении подов с еще 1 ноды, поды на 1 оставшейся ноде перешли в состояние "Not Ready", перестали собираться метрики, вернул ноды в рабочее состояние.
 
  - EFK | nginx ingress
+
 Создаем fluent-bit.values.yaml с парамантрами для чтения логов nginx-ingress, для nginx-ingress в values.yaml дописываем параметры для того чтобы он смог отдавать свои логи и разворачиваем
 ```
 helm upgrade --install fluent-bit-observability stable/fluent-bit --namespace observability -f fluent-bit.values.yaml
@@ -195,6 +199,7 @@ Cоздаем в kibana визуализацию, показывающую об�
 ![kibana-nginx_f](./kibana-nginx_f.png)
 
  - Loki
+
 Установливаем Loki и Promtail в namespace observability, дописываем манифест loki.values.yaml и разворачиваем
 ```
 helm upgrade --install loki loki/loki-stack -f loki.values.yaml \
@@ -203,21 +208,26 @@ helm upgrade --install loki loki/loki-stack -f loki.values.yaml \
 ```
 
  - Loki | Datasource
+
 В grafana смотрим что loki видит nginx-ingress и показывает его логи
 ![grafana-loki](./grafana-loki.png)
 
  - Loki | Визуализация
+
 Создаем в grafana свою новую панель
 ![grafana-nginx_man](./grafana-nginx_man.png)
 
 ## Как запустить проект:
+
  - Описание выше
  
 ## Как проверить работоспособность:
  - Посмотреть результат:
-   https://kibana.o-k-hw9.dns-cloud.net
-   https://grafana.o-k-hw9.dns-cloud.net (пароль в манифесте)
+
+https://kibana.o-k-hw9.dns-cloud.net
+https://grafana.o-k-hw9.dns-cloud.net (пароль в манифесте)
    
 ## PR checklist:
+
  - [x] Выставлен label с номером домашнего задания
 
