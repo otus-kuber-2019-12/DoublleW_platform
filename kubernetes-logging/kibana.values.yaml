@@ -1,0 +1,23 @@
+nodeSelector:
+  cloud.google.com/gke-nodepool: infra-pool
+
+tolerations:
+  - key: node-role
+    operator: Equal
+    value: infra
+    effect: NoSchedule
+
+ingress:
+  enabled: true
+  annotations: 
+    kubernetes.io/ingress.class: "nginx"
+    kubernetes.io/tls-acme: "true"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    cert-manager.io/acme-challenge-type: "http01"
+  path: /
+  hosts:
+    - kibana.o-k-hw9.dns-cloud.net
+  tls: 
+    - secretName: kibana.o-k-hw9.dns-cloud.net-tls
+      hosts:
+        - kibana.o-k-hw9.dns-cloud.net
